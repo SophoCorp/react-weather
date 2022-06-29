@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react'
 
 const DeatilsWeather = ({data, error}) => {
-  console.log(error);
   if(data) {
     return (
       <div>
