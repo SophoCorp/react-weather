@@ -7,16 +7,16 @@ import WeatherCitySearch from './components/WeatherCitySearch'
 const App = () => {
     const [textSearch, setTextSearch] = useState('')
     const [cityName, setCityName] = useState(null)
+    const [data, setData] = useState(null)
     
     const API_key = '92f01e7a19c2961a79399215c8f82849'
     const baseURL =  `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_key}`
     useEffect(() => {
-        if(cityName !== null) {
-            axios.get(baseURL).then((response) => {
-                console.log(response.data);
+            axios.get(baseURL).then((res) => {
+                const response = res.data;
+                 setData(response)
             })
-        }
-    })
+    }, [cityName])
 
     function handleChange(e) {
         setTextSearch(e.target.value)
@@ -26,8 +26,8 @@ const App = () => {
         e.preventDefault()
         setCityName(textSearch)
         setTextSearch('')
-    }
 
+    }
 
     return (
     <div>
@@ -36,7 +36,7 @@ const App = () => {
             onSubmited={(e) => handleSubmit(e)}
             value={textSearch}
         />
-        <DeatilsWeather/>
+        <DeatilsWeather data={data}/>
     </div>
   )
 }
