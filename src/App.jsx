@@ -8,14 +8,20 @@ const App = () => {
     const [textSearch, setTextSearch] = useState('')
     const [cityName, setCityName] = useState(null)
     const [data, setData] = useState(null)
+    const [error, setError] = useState(null)
     
     const API_key = '92f01e7a19c2961a79399215c8f82849'
-    const baseURL =  `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_key}`
+    const baseURL =  `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=${API_key}`
     useEffect(() => {
-            axios.get(baseURL).then((res) => {
-                const response = res.data;
-                 setData(response)
-            })
+            if(cityName !== null) {
+                axios.get(baseURL).then((res) => {
+                    const response = res.data;
+                     setData(response)
+                     setError(null)
+                }).catch((err) => {
+                    setError(err)
+                })
+            }
     }, [cityName])
 
     function handleChange(e) {
@@ -36,7 +42,7 @@ const App = () => {
             onSubmited={(e) => handleSubmit(e)}
             value={textSearch}
         />
-        <DeatilsWeather data={data}/>
+        <DeatilsWeather data={data} error={error}/>
     </div>
   )
 }

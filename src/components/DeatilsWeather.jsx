@@ -1,10 +1,16 @@
 import React, {useEffect} from 'react'
 
-const DeatilsWeather = ({data}) => {
+const DeatilsWeather = ({data, error}) => {
+  console.log(error);
   if(data) {
-    console.log(data);
     return (
-      <div>{data.name}</div>
+      <div>
+        {error ? <span>enter a correct city</span> : ''}
+        <h3>City : {data.name}</h3>
+        <p>
+          <em>Temp : </em><strong>{Math.round(data.main.temp)}°</strong>
+        </p>
+      </div>
     )
   }
 }
